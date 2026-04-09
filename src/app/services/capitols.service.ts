@@ -1,40 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, forkJoin, from, mergeMap, of, toArray } from 'rxjs';
+import { Capitol } from 'src/app/models/capitol.model';
+import { RegistreCapitolsDescarregatsService } from 'src/app/services/registre-capitols-descarregats.service';
 
 import capitolsJson from "src/assets/urls/capitols.json";
 import millorsJson from "src/assets/urls/millors-moments.json";
-
-export class Capitol {
-    title: string;
-    urlArxiu: string;
-    urlPagina: string;
-    temporada: number;
-    capitol?: number;
-    setmana?: number;
-    mida: number;
-
-    imatge_hd: any;
-    imatge: any;
-    durada_text: any;
-    durada_ms: any;
-    data_text: any;
-    data: any;
-
-    textNormalitzat: string;
-
-    descarregant: boolean = false;
-    descarregat: boolean = false;
-
-    get titolMostrar() {
-        return this.title.includes(" - ") ? this.title.split(" - ")[1] : this.title;
-    }
-    get nomArxiu() {
-        return this.title
-            .replaceAll("\"", "'")
-            .replaceAll("?", ".") + ".mp3"; // [bunquer-descarregador.github.io].mp3
-    }
-}
 
 @Injectable({
     providedIn: 'root',
@@ -53,7 +24,13 @@ export class CapitolsService {
 
     public seguirDescarregant = false;
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private rcds: RegistreCapitolsDescarregatsService,
+    ) {
+
+        // Llegir de localStorage //
+        rcds.carregar([...this.capitols, ...this.millors]);
 
         // Crear textNormalitzat per capítol //
         [...this.capitols, ...this.millors].forEach(c => {
@@ -91,6 +68,8 @@ export class CapitolsService {
                 
                 setTimeout(() => {
                     capitol.descarregat = true;
+                    capitol.dataDescarrega = new Date();
+                    this.rcds.guardar([...this.capitols, ...this.millors]);
                 }, 500);
             },
             error: (err) => {
@@ -125,6 +104,9 @@ export class CapitolsService {
                     console.log(capitol.title);
 
                     capitol.descarregat = true;
+
+                    capitol.dataDescarrega = new Date();
+                    this.rcds.guardar([...this.capitols, ...this.millors]);
 
                     return from([true]);
                 }),
@@ -173,6 +155,9 @@ export class CapitolsService {
                     console.log(capitol.title);
                     
                     capitol.descarregat = true;
+                    
+                    capitol.dataDescarrega = new Date();
+                    this.rcds.guardar([...this.capitols, ...this.millors]);
 
                     return from([true]);
                 }),

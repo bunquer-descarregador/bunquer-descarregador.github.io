@@ -3,7 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderModule } from 'primeng/slider';
 import { Subscription } from 'rxjs';
-import { Capitol, CapitolsService } from 'src/app/services/capitols.service';
+import { Capitol } from 'src/app/models/capitol.model';
+import { CapitolsService } from 'src/app/services/capitols.service';
 import { SeleccioTemporadaService } from 'src/app/services/seleccio-temporada.service';
 
 @Component({

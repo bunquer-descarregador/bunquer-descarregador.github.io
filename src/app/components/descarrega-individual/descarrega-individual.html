@@ -5,6 +5,8 @@
         <input [(ngModel)]="textBuscar" placeholder="Cerca..." (input)="actLlistaFiltrada()">
     </div>
 
+    <app-imatge-flotant [capitol]="capitolHover" />
+    
     @if (!textBuscar) {
         <!-- Normal -->
         <div class="llista-capitols text-center mt-5">
@@ -35,9 +37,9 @@
                                 <th>Títol</th>
                                 <th>Desc. / Escolta</th>
                             </tr>
-                            @for (capitol of temporada; track capitol.title) {
+                            @for (capitol of temporada; track capitol.id) {
                                 
-                                <tr class="fila">
+                                <tr class="fila" [class.descarregat]="capitol.dataDescarrega" (mouseenter)="capitolHover = capitol" (mouseleave)="capitolHover = null">
                                     @if (!capitol.setmana) {
                                         <td class="capitol">
                                             @if (capitol.capitol) {
@@ -49,7 +51,7 @@
                                     <td>
                                         <div class="botons">
                                             <button class="descarregar boto boing" (click)="cs.descarregarCapitol(capitol)" title="Descarrega MP3"
-                                                [disabled]="capitol.descarregant" [class.descarregat]="capitol.descarregat">
+                                                [disabled]="capitol.descarregant" [class.boto-ok-verd]="capitol.descarregat">
                                                 @if (capitol.descarregat) {
                                                     <i class="fa-solid fa-check"></i>
                                                 } @else if (capitol.descarregant) {
@@ -82,8 +84,8 @@
                             <th>Títol</th>
                             <th>Desc. / Escolta</th>
                         </tr>
-                        @for (capitol of llistaFiltrada; track capitol.title) {
-                            <tr class="fila">
+                        @for (capitol of llistaFiltrada; track capitol.id) {
+                            <tr class="fila" [class.descarregat]="capitol.dataDescarrega" (mouseenter)="capitolHover = capitol" (mouseleave)="capitolHover = null">
                                 <td class="capitol">
                                     @if (capitol.capitol) {
                                         <span class="num-capitol">{{ capitol.temporada }}x</span>{{ capitol.capitol }}
@@ -93,7 +95,7 @@
                                 <td>
                                     <div class="botons">
                                         <button class="descarregar boto boing" (click)="cs.descarregarCapitol(capitol)" title="Descarrega MP3"
-                                            [disabled]="capitol.descarregant" [class.descarregat]="capitol.descarregat">
+                                            [disabled]="capitol.descarregant" [class.boto-ok-verd]="capitol.descarregat">
                                             @if (capitol.descarregat) {
                                                 <i class="fa-solid fa-check"></i>
                                             } @else if (capitol.descarregant) {

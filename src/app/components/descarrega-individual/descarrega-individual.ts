@@ -2,14 +2,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinner } from 'primeng/progressspinner';
-import { Capitol, CapitolsService } from 'src/app/services/capitols.service';
+import { Capitol } from 'src/app/models/capitol.model';
+import { CapitolsService } from 'src/app/services/capitols.service';
 import { SeleccioTemporadaService } from 'src/app/services/seleccio-temporada.service';
+import { ImatgeFlotantComponent } from './imatge-flotant/imatge-flotant';
 
 @Component({
     selector: 'app-descarrega-individual',
     imports: [
         FormsModule,
         ProgressSpinner,
+        ImatgeFlotantComponent
     ],
     templateUrl: './descarrega-individual.html',
     styleUrl: './descarrega-individual.scss'
@@ -20,6 +23,8 @@ export class DescarregaIndividual {
     public llistaFiltrada: Capitol[];
 
     public desplegablesOberts = [false, false, false, false, false, false];
+
+    public capitolHover: Capitol | null = null;
 
     constructor(
         public cs: CapitolsService,

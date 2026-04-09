@@ -40,7 +40,7 @@
             display: flex;
             flex-direction: column;
 
-            background-color: #ffacc033;
+            background-color: hsl(346, 45%, 32%);
             border-radius: 2rem;
             margin: auto;
             overflow: hidden;
@@ -124,42 +124,33 @@
                 }
 
                 tr.fila {
-                    transition: height 0.3s, background-color 0.3s, ;
 
-                    &:nth-child(even) { background-color: hsl(346, 30%, 10%); }
-                    &:nth-child(odd) { background-color: hsl(346, 30%, 13%) }
+                    &:nth-child(even) { background-color: hsl(346, 50%, 15%); }
+                    &:nth-child(odd) { background-color: hsl(346, 50%, 18%) }
 
                     &:hover {
-                        background-color: #640017;
+                        background-color: hsl(346, 100%, 20%);
 
                         .titol {
-                            font-size: 1.35rem;
-                            @include mobil {
-                                font-size: 1rem;
-                            }
-                            font-weight: bold;
                             
                             &::before {
                                 opacity: 0.4;
                             }
                         }
-                        .botons .boto {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-
-                            &.descarregar {
-                                height: 9.5rem;
-                                font-size: 1.75rem;
-                                border-radius: 2.5rem;
-                            }
-                            &.escoltar {
-                                height: 5rem;
-                                font-size: 1.5rem;
-                                border-radius: 1.625rem;
-                            }
-                        }
                         
+                    }
+
+                    &.descarregat {
+                        &:nth-child(even) { background-color: hsl(106, 100%, 15%); }
+                        &:nth-child(odd) { background-color: hsl(106, 100%, 18%) }
+
+                        &:hover {
+                            background-color: hsl(106, 100%, 23%);
+                        }
+                        td.titol::before {
+                            filter: blur(10px);
+                            opacity: 0.2;
+                        }
                     }
 
                     .capitol {
@@ -177,8 +168,6 @@
                         z-index: 1;
                         position: relative;
 
-                        transition: font-size 0.3s, font-weight 0.3s;
-
                         &::before {
                             content: "";
                             position: absolute;
@@ -188,8 +177,6 @@
                             opacity: 0.2;
                             background-image: var(--fons);
                             z-index: -1;
-
-                            transition: opacity 0.3s;
                         }
                     }
                     td .botons {
@@ -227,7 +214,7 @@
                                 width: 4rem;
                             }
 
-                            &.descarregat {
+                            &.boto-ok-verd {
                                 background-color: hsl(140, 76%, 34%);
                                 color: rgb(163, 255, 126);
                                 pointer-events: none;
