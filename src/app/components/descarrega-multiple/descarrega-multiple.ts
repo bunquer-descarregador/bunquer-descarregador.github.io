@@ -18,6 +18,10 @@ import { SeleccioTemporadaService } from 'src/app/services/seleccio-temporada.se
 })
 export class DescarregaMultiple implements OnInit, OnDestroy {
 
+    // Debug //
+    private readonly DEBUG = false;
+    private readonly delayDescarregaTest = 300;
+
     public readonly llistes: any;
 
     public readonly botonsTemporades = [
@@ -34,7 +38,8 @@ export class DescarregaMultiple implements OnInit, OnDestroy {
     public llistaSeleccionada: Capitol[] = [];
 
     public rangCapitols: number[] = [0, this.maxRang];
-
+    
+    public gradientSlider;
 
     constructor(
         public cs: CapitolsService,
@@ -126,13 +131,54 @@ export class DescarregaMultiple implements OnInit, OnDestroy {
 
         // Reset slider //
         this.rangCapitols = [0, this.maxRang];
+        
+        this.actualitzarGradientSlider();
     }
 
     descarregar() {
+        if (this.DEBUG) { this.cs.descarregarCapitolsTest(this.capitolsSeleccionats, this.delayDescarregaTest); return; }
+        
         this.cs.descarregarCapitols(this.capitolsSeleccionats);
     }
     cancelar() {
         this.cs.seguirDescarregant = false;
+    }
+
+    actualitzarGradientSlider() {
+        let capitols: Capitol[] = [];
+
+        Object.keys(this.sts.seleccio).forEach(nomLlista => {
+            if (this.sts.seleccio[nomLlista]) {
+                capitols.push(...this.llistes[nomLlista]);
+            }
+        });
+
+        const total = capitols.length;
+        if (!total) return;
+
+        let gradient = "";
+
+        let colorActual = capitols[0].dataDescarrega ? "var(--color-descarregats)" : "var(--color-no-descarregats)";
+        let iniciIndex = 0;
+
+        for (let i = 1; i <= capitols.length; i++) {
+            const c = capitols[i];
+            const color = c?.dataDescarrega ? "var(--color-descarregats)" : "var(--color-no-descarregats)";
+
+            if (i === capitols.length || color !== colorActual) {
+                const percentatgeInici = (iniciIndex / total) * 100;
+                const percentatgeFinal = (i / total) * 100;
+
+                gradient += `${colorActual} ${percentatgeInici}% ${percentatgeFinal}%`;
+
+                if (i !== capitols.length) gradient += ", ";
+
+                colorActual = color;
+                iniciIndex = i;
+            }
+        }
+
+        this.gradientSlider = `linear-gradient(to right, ${gradient})`;
     }
 
 

@@ -80,12 +80,20 @@
 
     p-slider {
         --p-slider-track-size: 10px;
-        --p-slider-range-background: #f61e50;
+        --p-slider-range-background: transparent;
         --p-slider-track-background: #ff61863d;
         --p-slider-handle-content-background: #ff7696;
+
+        --color-no-descarregats: hsl(346, 59%, 30%);
+        --color-descarregats: hsl(106, 59%, 21%);
         
         &.p-disabled {
             filter: saturate(0.5);
+        }
+        
+        ::ng-deep .p-slider-range {
+            mix-blend-mode: overlay;
+            background-color: white;
         }
     }
 
