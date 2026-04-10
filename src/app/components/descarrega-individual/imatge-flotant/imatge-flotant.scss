@@ -1,9 +1,15 @@
 @import "src/styles.scss";
 
 img {
-  position: fixed;
-  pointer-events: none;
-  height: 150px; 
-  border-radius: 0.5rem 2rem 2rem 2rem;
-  z-index: 9999;
+    position: fixed;
+    pointer-events: none;
+    height: 150px;
+    border-radius: 0.5rem 2rem 2rem 2rem;
+    z-index: 9999;
+}
+
+@media (hover: none) {
+    img {
+        display: none;
+    }
 }
