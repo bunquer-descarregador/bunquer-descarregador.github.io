@@ -1,6 +1,11 @@
 @if (capitol?.imatge) {
-    <img
-        [src]="capitol?.imatge"
+    <div class="marc" [class]="classeRetallar"
         [style.left.px]="x"
         [style.top.px]="y">
+        
+        <img
+            class="imatge"
+            [src]="capitol?.imatge">
+
+    </div>
 }

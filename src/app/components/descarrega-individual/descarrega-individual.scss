@@ -128,24 +128,28 @@
                     &:nth-child(even) { background-color: hsl(346, 50%, 15%); }
                     &:nth-child(odd) { background-color: hsl(346, 50%, 18%) }
 
-                    &:hover {
-                        background-color: hsl(346, 100%, 20%);
+                    @include cursor {
+                        &:hover {
+                            background-color: hsl(346, 100%, 20%);
 
-                        .titol {
-                            
-                            &::before {
-                                opacity: 0.4;
+                            .titol {
+                                
+                                &::before {
+                                    opacity: 0.4;
+                                }
                             }
+                            
                         }
-                        
                     }
 
                     &.descarregat {
                         &:nth-child(even) { background-color: hsl(106, 100%, 15%); }
                         &:nth-child(odd) { background-color: hsl(106, 100%, 18%) }
 
-                        &:hover {
-                            background-color: hsl(106, 100%, 23%);
+                        @include cursor {
+                            &:hover {
+                                background-color: hsl(106, 100%, 23%);
+                            }
                         }
                         td.titol::before {
                             filter: blur(10px);

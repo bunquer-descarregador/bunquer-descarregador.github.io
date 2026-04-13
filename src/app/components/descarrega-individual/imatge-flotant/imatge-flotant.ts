@@ -11,9 +11,22 @@ export class ImatgeFlotantComponent {
     @Input() capitol: Capitol | null = null;
     
 
-    x = 0;
-    y = 0;
+    get classeRetallar() {
+        if (!this.capitol || !this.capitol?.temporada) return;
 
+        if (this.capitol.temporada < 3 ||
+            this.capitol.temporada == 3 && this.capitol?.capitol! <= 156)
+            return "mode-1";
+        else if (this.capitol.temporada == 3 && this.capitol?.capitol! >= 157)
+            return "mode-2"
+        else
+            return "mode-3";
+    
+    }
+    
+    // Posició, segir al cursor //
+    protected x = 0;
+    protected y = 0;
     @HostListener('document:mousemove', ['$event'])
     onMouseMove(e: MouseEvent) {
         // const imgWidth = 200;
