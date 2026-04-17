@@ -1,0 +1,23 @@
+@import "src/styles.scss";
+
+section {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 2rem;
+    background-color: hsl(231, 29%, 26%);
+
+
+    .boto {
+        background-color: hsl(232, 100%, 84%);
+        color: hsl(232, 100%, 25%);
+
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+
+        font-weight: bold;
+    }
+
+}
+
+

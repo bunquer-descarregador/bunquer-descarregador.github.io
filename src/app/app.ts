@@ -1,11 +1,12 @@
 import { Component, HostListener } from '@angular/core';
-import { DescarregaIndividual } from './components/descarrega-individual/descarrega-individual';
-import { DescarregaMultiple } from './components/descarrega-multiple/descarrega-multiple';
-import { Footer } from './components/footer/footer';
+import { DescarregaIndividual } from 'src/app/components/descarrega-individual/descarrega-individual';
+import { DescarregaMultiple } from 'src/app/components/descarrega-multiple/descarrega-multiple';
+import { Footer } from 'src/app/components/footer/footer';
+import { ImportExport } from 'src/app/components/import-export/import-export';
 
 @Component({
     selector: 'app-root',
-    imports: [DescarregaMultiple, DescarregaIndividual, Footer],
+    imports: [ImportExport, DescarregaMultiple, DescarregaIndividual, Footer],
     templateUrl: './app.html',
     styleUrl: './app.scss'
 })

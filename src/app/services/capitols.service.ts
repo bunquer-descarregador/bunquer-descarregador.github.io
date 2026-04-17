@@ -12,7 +12,7 @@ import millorsJson from "src/assets/urls/millors-moments.json";
 })
 export class CapitolsService {
 
-    private capitols: Capitol[] = (capitolsJson as Capitol[]).map(c => Object.assign(new Capitol(), c));
+    public capitols: Capitol[] = (capitolsJson as Capitol[]).map(c => Object.assign(new Capitol(), c));
     public capitolsPerTemporades: Capitol[][];
     public millors: Capitol[] = (millorsJson as Capitol[]).map(c => Object.assign(new Capitol(), c));
 

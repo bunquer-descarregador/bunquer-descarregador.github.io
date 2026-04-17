@@ -13,9 +13,9 @@ export class RegistreCapitolsDescarregatsService {
         let capitolsDescarregats: Record<string, string | null> = JSON.parse(raw);
 
         capitols.forEach(c => {
-            let dataString = capitolsDescarregats[c.id];
-            if (dataString)
-                c.dataDescarrega = new Date(dataString);
+            let data = capitolsDescarregats[c.id];
+            if (data)
+                c.dataDescarrega = new Date(data);
         });
     }
 

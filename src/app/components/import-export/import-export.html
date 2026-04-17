@@ -1,0 +1,15 @@
+<section>
+
+    <label class="boto boing">
+        <input type="file" id="file-picker" accept=".json,application/json" (change)="onFileSelected($event)" hidden>
+        Importar
+        <!-- <i class="fa-solid fa-file-import ms-1"></i> -->
+         <i class="fa-solid fa-arrow-right-to-bracket ms-1" style="rotate:90deg"></i>
+    </label>
+    
+    <button class="boto boing" (click)="exportar()">
+        Exportar
+        <i class="fa-solid fa-arrow-up-from-bracket ms-1"></i>
+    </button>
+
+</section>
