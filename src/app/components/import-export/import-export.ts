@@ -15,7 +15,8 @@ export class ImportExport {
 
     importar(json) {
         [...this.cs.capitols, ...this.cs.millors].forEach(c => {
-            c.dataDescarrega = json.data[c.id] ? new Date(json.data[c.id]) : null;
+            if (json.data[c.id])
+                c.dataDescarrega = new Date(json.data[c.id]);
         });
 
         console.log("JSON importat", json.data);
@@ -26,12 +27,12 @@ export class ImportExport {
         [...this.cs.capitols, ...this.cs.millors].forEach(c => { capitolsGuardar[c.id] = c.dataDescarrega });
 
         const json = {
-            type: "capitols-descarregats",
-            version: "1",
-            source: "https://bunquer-descarregador.github.io/",
-            exportedAt: new Date().toLocaleString('ca-ES', { dateStyle: 'long', timeStyle: 'short' }),
-            seen: this.cs.capitols.filter(c => c.dataDescarrega).length + "/" + this.cs.capitols.length,
-            data: capitolsGuardar,
+            "type": "capitols-descarregats",
+            "version": "1",
+            "source": "https://bunquer-descarregador.github.io/",
+            "exportat-el": new Date().toLocaleString('ca-ES', { dateStyle: 'long', timeStyle: 'short' }),
+            "capitols-vistos": this.cs.capitols.filter(c => c.dataDescarrega).length + "/" + this.cs.capitols.length,
+            "data": capitolsGuardar,
         };
 
         console.log(json);
