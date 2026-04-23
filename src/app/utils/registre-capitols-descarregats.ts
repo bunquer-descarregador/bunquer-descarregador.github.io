@@ -1,13 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Capitol } from "../models/capitol.model";
+import { Capitol } from "src/app/models/capitol.model";
 
-@Injectable({
-    providedIn: 'root',
-})
-export class RegistreCapitolsDescarregatsService {
 
-    public carregar(capitols: Capitol[]) {
-        let raw = localStorage.getItem("capitolsDescarregats");
+export class RegistreCapitolsDescarregats {
+    private static readonly CLAU = "capitolsDescarregats";
+
+    public static carregar(capitols: Capitol[]) {
+        let raw = localStorage.getItem(this.CLAU);
         if (!raw) return;
 
         let capitolsDescarregats: Record<string, string | null> = JSON.parse(raw);
@@ -19,11 +17,11 @@ export class RegistreCapitolsDescarregatsService {
         });
     }
 
-    public guardar(capitols: Capitol[]) {
+    public static guardar(capitols: Capitol[]) {
         let capitolsGuardar: Record<string, Date | null> = {};
         capitols.forEach(c => { capitolsGuardar[c.id] = c.dataDescarrega });
 
-        localStorage.setItem("capitolsDescarregats", JSON.stringify(capitolsGuardar));
+        localStorage.setItem(this.CLAU, JSON.stringify(capitolsGuardar));
     }
 
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, forkJoin, from, mergeMap, of, toArray } from 'rxjs';
 import { Capitol } from 'src/app/models/capitol.model';
-import { RegistreCapitolsDescarregatsService } from 'src/app/services/registre-capitols-descarregats.service';
+import { RegistreCapitolsDescarregats } from 'src/app/utils/registre-capitols-descarregats';
 
 import capitolsJson from "src/assets/urls/capitols.json";
 import millorsJson from "src/assets/urls/millors-moments.json";
@@ -26,11 +26,10 @@ export class CapitolsService {
 
     constructor(
         private http: HttpClient,
-        private rcds: RegistreCapitolsDescarregatsService,
     ) {
 
         // Llegir de localStorage //
-        rcds.carregar([...this.capitols, ...this.millors]);
+        RegistreCapitolsDescarregats.carregar([...this.capitols, ...this.millors]);
 
         // Crear textNormalitzat per capítol //
         [...this.capitols, ...this.millors].forEach(c => {
@@ -56,7 +55,7 @@ export class CapitolsService {
 
     descarregarCapitol(capitol: Capitol) {
         capitol.descarregant = true;
-        
+
         this.http.get(capitol.urlArxiu, { responseType: 'blob' }).subscribe({
             next: (blob) => {
                 const url = window.URL.createObjectURL(blob);
@@ -65,11 +64,11 @@ export class CapitolsService {
                 link.download = capitol.nomArxiu || 'fitxer.mp3';
                 link.click();
                 window.URL.revokeObjectURL(url);
-                
+
                 setTimeout(() => {
                     capitol.descarregat = true;
                     capitol.dataDescarrega = new Date();
-                    this.rcds.guardar([...this.capitols, ...this.millors]);
+                    RegistreCapitolsDescarregats.guardar([...this.capitols, ...this.millors]);
                 }, 500);
             },
             error: (err) => {
@@ -99,14 +98,14 @@ export class CapitolsService {
                     window.URL.revokeObjectURL(url);
 
                     this.progresDescarrega!.descarregats++;
-                    
+
                     this.progresDescarrega!.arxiuActualDescarregant = capitol;
                     console.log(capitol.title);
 
                     capitol.descarregat = true;
 
                     capitol.dataDescarrega = new Date();
-                    this.rcds.guardar([...this.capitols, ...this.millors]);
+                    RegistreCapitolsDescarregats.guardar([...this.capitols, ...this.millors]);
 
                     return from([true]);
                 }),
@@ -153,11 +152,11 @@ export class CapitolsService {
 
                     this.progresDescarrega!.arxiuActualDescarregant = capitol;
                     console.log(capitol.title);
-                    
+
                     capitol.descarregat = true;
-                    
+
                     capitol.dataDescarrega = new Date();
-                    this.rcds.guardar([...this.capitols, ...this.millors]);
+                    RegistreCapitolsDescarregats.guardar([...this.capitols, ...this.millors]);
 
                     return from([true]);
                 }),
