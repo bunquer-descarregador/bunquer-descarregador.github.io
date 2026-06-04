@@ -15,24 +15,29 @@ export class ImportExport {
 
     importar(json) {
         [...this.cs.capitols, ...this.cs.millors].forEach(c => {
-            if (json.data[c.id])
-                c.dataDescarrega = new Date(json.data[c.id]);
+            if (json["capitols-vistos"][c.id])
+                c.dataDescarrega = new Date(json["capitols-vistos"][c.id]);
         });
 
-        console.log("JSON importat", json.data);
+        console.log("JSON importat", json["capitols-vistos"]);
     }
 
     exportar() {
         let capitolsGuardar: Record<string, Date | null> = {};
         [...this.cs.capitols, ...this.cs.millors].forEach(c => { capitolsGuardar[c.id] = c.dataDescarrega });
 
+        let vistos = this.cs.capitols.filter(c => c.dataDescarrega).length;
+        let totals = this.cs.capitols.length;
+
         const json = {
             "type": "capitols-descarregats",
-            "version": "1",
+            "version": 1,
             "source": "https://bunquer-descarregador.github.io/",
+
             "exportat-el": new Date().toLocaleString('ca-ES', { dateStyle: 'long', timeStyle: 'short' }),
-            "capitols-vistos": this.cs.capitols.filter(c => c.dataDescarrega).length + "/" + this.cs.capitols.length,
-            "data": capitolsGuardar,
+            "percentatge": `${vistos}/${totals} (${(vistos / totals * 100).toFixed(1)}%)`,
+
+            "capitols-vistos": capitolsGuardar,
         };
 
         console.log(json);
@@ -70,13 +75,9 @@ export class ImportExport {
         reader.onload = () => {
             try {
                 const text = reader.result as string;
-                const data = JSON.parse(text);
+                const json = JSON.parse(text);
 
-                console.log(data);
-
-                this.importar(data);
-
-
+                this.importar(json);
 
             } catch (e) {
                 console.error("JSON invàlid", e);
